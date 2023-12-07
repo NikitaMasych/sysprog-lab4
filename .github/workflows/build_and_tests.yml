@@ -1,0 +1,30 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up CMake
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake
+        shell: bash
+
+      - name: Build the project
+        run: ./.github/workflows/build.sh
+
+      - name: Run tests
+        run: sudo ./.github/workflows/tests.sh
+
